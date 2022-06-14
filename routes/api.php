@@ -18,5 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::get('/domain', [DomainController::class, 'index'])->name('domain.index');
 
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
     Route::get('/user/{user}/domains', [UserController::class, 'domains'])->name('user.domains');
 });

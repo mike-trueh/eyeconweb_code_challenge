@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DomainController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::get('/domain', [DomainController::class, 'index'])->name('domain.index');
+
+    Route::get('/user/{user}/domains', [UserController::class, 'domains'])->name('user.domains');
 });

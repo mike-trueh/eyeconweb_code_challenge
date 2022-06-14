@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,5 +49,22 @@ class User extends Authenticatable
     public function domains(): HasMany
     {
         return $this->hasMany(Domain::class);
+    }
+
+    /**
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeHasCredentials(Builder $builder): Builder
+    {
+        return $builder->whereNotNull('cloudflare_token')->orWhereNotNull('cloudflare_api_key');
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasCredentialsAttribute(): bool
+    {
+        return $this->cloudflare_token || $this->cloudflare_api_key;
     }
 }

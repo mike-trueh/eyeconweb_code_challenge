@@ -16,14 +16,25 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $user_id
+ * @property string $external_id
+ * @property string $name
+ * @property string $status
+ * @property int $paused
+ * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\DomainFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Domain newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Domain newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Domain query()
  * @method static \Illuminate\Database\Eloquent\Builder|Domain whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Domain whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Domain whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Domain whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Domain whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Domain wherePaused($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Domain whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Domain whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Domain whereUserId($value)
  */
@@ -43,9 +54,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Domain[] $domains
  * @property-read int|null $domains_count
+ * @property-read bool $has_credentials
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|User hasCredentials()
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()

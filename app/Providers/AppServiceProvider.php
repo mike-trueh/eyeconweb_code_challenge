@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Cloudflare\CloudflareApiInterface;
+use App\Services\Cloudflare\CloudflareGuzzleSDK;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(CloudflareApiInterface::class, CloudflareGuzzleSDK::class);
     }
 
     /**
@@ -21,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

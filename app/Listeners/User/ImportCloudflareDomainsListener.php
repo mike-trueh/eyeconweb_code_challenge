@@ -3,28 +3,18 @@
 namespace App\Listeners\User;
 
 use App\Events\User\UserCreatedEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Jobs\User\ImportDomainsJob;
 
-class ImportCloudflareDomainsListener implements ShouldQueue
+class ImportCloudflareDomainsListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
      * @param UserCreatedEvent $event
      * @return void
      */
-    public function handle(UserCreatedEvent $event)
+    public function handle(UserCreatedEvent $event): void
     {
-        //
+        dispatch(new ImportDomainsJob($event->user));
     }
 }

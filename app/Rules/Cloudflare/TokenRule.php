@@ -2,8 +2,7 @@
 
 namespace App\Rules\Cloudflare;
 
-use App\Services\Cloudflare\Client\GuzzleClient;
-use App\Services\Cloudflare\CloudflareApi;
+use App\Services\Cloudflare\CloudflareApiInterface;
 use Illuminate\Contracts\Validation\Rule;
 
 class TokenRule implements Rule
@@ -17,9 +16,9 @@ class TokenRule implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $client = (new GuzzleClient())->setToken($value);
+        $api = app(CloudflareApiInterface::class);
 
-        return (new CloudflareApi($client))->validateCredentials();
+        return $api->setToken($value)->validateCredentials();
     }
 
     /**

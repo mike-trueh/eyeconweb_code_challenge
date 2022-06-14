@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -38,4 +39,14 @@ class User extends Authenticatable
         'cloudflare_api_key' => 'encrypted',
         'cloudflare_token' => 'encrypted',
     ];
+
+    /**
+     * Related domains for user
+     *
+     * @return HasMany
+     */
+    public function domains(): HasMany
+    {
+        return $this->hasMany(Domain::class);
+    }
 }

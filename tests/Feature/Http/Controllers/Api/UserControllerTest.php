@@ -80,7 +80,7 @@ class UserControllerTest extends TestCase
     public function test_user_creation_with_cloudflare_token()
     {
         $mock = Mockery::mock(CloudflareApiInterface::class);
-        $mock->shouldReceive('setToken')->times(2);
+        $mock->shouldReceive('setToken')->times(2)->andReturnSelf();
         $mock->shouldReceive('validateCredentials')->once()->andReturn(false);
         $this->app->instance(CloudflareApiInterface::class, $mock);
 
@@ -109,7 +109,7 @@ class UserControllerTest extends TestCase
     public function test_user_creation_with_cloudflare_api_key()
     {
         $mock = Mockery::mock(CloudflareApiInterface::class);
-        $mock->shouldReceive('setApiKey')->times(2);
+        $mock->shouldReceive('setApiKey')->times(2)->andReturnSelf();
         $mock->shouldReceive('validateCredentials')->once()->andReturn(false);
         $this->app->instance(CloudflareApiInterface::class, $mock);
 

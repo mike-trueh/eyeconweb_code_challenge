@@ -10,6 +10,7 @@ use Cloudflare\API\Auth\APIKey;
 use Cloudflare\API\Auth\APIToken;
 use Cloudflare\API\Auth\Auth;
 use Cloudflare\API\Endpoints\Zones;
+use stdClass;
 
 class CloudflareGuzzleSDK implements CloudflareApiInterface
 {
@@ -54,7 +55,7 @@ class CloudflareGuzzleSDK implements CloudflareApiInterface
         $this->setAdapter();
 
         try {
-            $this->adapter->get('user/tokens/verify');
+            $this->performValidateRequest();
             return true;
         } catch (ResponseException $exception) {
             return false;
@@ -70,7 +71,23 @@ class CloudflareGuzzleSDK implements CloudflareApiInterface
             throw new CloudflareException('Auth data is empty');
         }
 
-        $this->adapter = new Guzzle($this->auth);
+        $this->adapter = $this->getClient();
+    }
+
+    /**
+     * @return Guzzle
+     */
+    protected function getClient(): Guzzle
+    {
+        return new Guzzle($this->auth);
+    }
+
+    /**
+     * @return void
+     */
+    public function performValidateRequest(): void
+    {
+        $this->adapter->get('user/tokens/verify');
     }
 
     /**
@@ -80,10 +97,24 @@ class CloudflareGuzzleSDK implements CloudflareApiInterface
     {
         $this->setAdapter();
 
-        $zonesRequest = new Zones($this->adapter);
-        $zones = $zonesRequest->listZones($name, $status, $page, $perPage, $order, $direction, $match);
+        $zones = $this->performZonesRequest($name, $status, $page, $perPage, $order, $direction, $match);
 
         return $this->convertZonesToDomains($zones);
+    }
+
+    /**
+     * @param string $name
+     * @param string $status
+     * @param int $page
+     * @param int $perPage
+     * @param string $order
+     * @param string $direction
+     * @param string $match
+     * @return stdClass
+     */
+    protected function performZonesRequest(string $name = '', string $status = '', int $page = 1, int $perPage = 20, string $order = '', string $direction = '', string $match = 'all'): stdClass
+    {
+        return (new Zones($this->adapter))->listZones($name, $status, $page, $perPage, $order, $direction, $match);
     }
 
     /**

@@ -1,0 +1,114 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Code challenge",
+        "description": "",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/domain": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get all domains for DB",
+                "description": "Display a listing of the resource.",
+                "operationId": "a943e408afe0d879b3b36dde55460c93",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/user": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create new user",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "14ffc1a2beec11e409c05b16801dd1c1",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "cloudflare_token",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cloudflare_api_key",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{userId}/domains": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get domains for current user from DB",
+                "description": "Display users domains list",
+                "operationId": "55bcf153c26bdb1489a255636b9c7777",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Users resources"
+        },
+        {
+            "name": "Domains",
+            "description": "Domain resources"
+        }
+    ]
+}

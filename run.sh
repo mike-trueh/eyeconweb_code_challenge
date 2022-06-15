@@ -2,7 +2,9 @@
 
 cp .env.example .env
 
-./vendor/bin/sail up -d
+docker-compose up -d
+
+docker-compose exec laravel.test composer install
 
 ./vendor/bin/sail artisan key:generate
 
